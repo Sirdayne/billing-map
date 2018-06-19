@@ -1,9 +1,9 @@
 export default {
   data() {
     return {
+      map: null,
       myLatLng: {lat: 51.1605, lng: 71.4704},
       marker: null,
-      map: null,
       content: `<div><h2>Astana</h2></div>`,
       infoWindow: null,
     }
@@ -18,7 +18,7 @@ export default {
           zoom: 14,
           center: this.myLatLng
       }
-      this.map = new google.maps.Map(document.getElementById("map"), mapOptions)
+      this.map = new google.maps.Map(document.getElementById("google-map"), mapOptions)
     },
     addMarkers() {
       this.marker = new google.maps.Marker({

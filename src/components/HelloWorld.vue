@@ -5,6 +5,7 @@
     <button @click="removeMarkers">remove marker</button>
     <button @click="changeContent('CONTENT CHANGED')">change tooltip</button>
     <div id="map"></div>
+    <div id="google-map"></div>
     <img src="@/assets/logo.png">
     <h1>{{ msg }}</h1>
     <input type="text" v-model="search">
@@ -19,6 +20,7 @@ import { EventBus } from '@/services/EventBus'
 import http from '@/services/httpQuery'
 import GlobalMethods from '@/mixins/GlobalMethods'
 import GoogleMapDrawer from '@/mixins/GoogleMapDrawer'
+import LeafletMapDrawer from '@/mixins/LeafletMapDrawer'
 
 export default {
   name: 'HelloWorld',
@@ -31,7 +33,8 @@ export default {
   },
   mixins: [
     GlobalMethods,
-    GoogleMapDrawer
+    GoogleMapDrawer,
+    LeafletMapDrawer
   ],
   computed: {
     entity() {
@@ -54,7 +57,7 @@ export default {
 </script>
 
 <style scoped>
-#map{
+#map, #google-map{
   width: 100%;
   height: 500px;
 }

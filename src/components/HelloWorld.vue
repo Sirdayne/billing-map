@@ -4,7 +4,7 @@
     <img src="@/assets/logo.png">
     <h1>{{ msg }}</h1>
     <input type="text" v-model="search">
-    <p v-for="item in paginatedData">{{ item.title }}</p>
+    <p v-for="item in paginate(contents)" :key="item.id">{{ item.title }}</p>
     <button @click="prevPage" :disabled="pageNumber === 0">prev</button>
     <button @click="nextPage" :disabled="pageNumber >= pageCount -1">next</button>
   </div>

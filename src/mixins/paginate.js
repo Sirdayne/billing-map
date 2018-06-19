@@ -6,21 +6,23 @@ export default {
     }
   },
   computed: {
-    paginatedData(){
-      const start = this.pageNumber * this.perPage
-      const end = start + this.perPage;
-      return this.contents.slice(start, end);
-    },
-    pageCount(){
+    pageCount() {
       return Math.floor(this.contents.length / this.perPage);
     }
   },
   methods: {
-    nextPage(){
+    nextPage(array) {
       this.pageNumber++;
+      this.paginate(array)
     },
-    prevPage(){
+    prevPage(array) {
       this.pageNumber--;
+      this.paginate(array)
+    },
+    paginate(array) {
+      const start = this.pageNumber * this.perPage
+      const end = start + this.perPage;
+      return array.slice(start, end)
     }
   }
 }

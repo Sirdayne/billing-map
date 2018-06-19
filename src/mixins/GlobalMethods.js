@@ -19,10 +19,10 @@ export default {
       this.pageNumber--;
       this.paginate(array)
     },
-    paginate(array) {
+    paginate(arr) {
       const start = this.pageNumber * this.perPage
-      const end = start + this.perPage;
-      return array.slice(start, end)
+      const end = start + this.perPage
+      return arr.slice(start, end)
     }
   }
 }

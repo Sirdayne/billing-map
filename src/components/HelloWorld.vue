@@ -1,10 +1,14 @@
 <template>
   <div class="hello">
     <router-link to="billing-map">Billing Map</router-link>
+    <button @click="addMarker">add marker</button>
+    <button @click="removeMarkers">remove marker</button>
+    <button @click="changeContent('CONTENT CHANGED')">change tooltip</button>
+    <div id="map"></div>
     <img src="@/assets/logo.png">
     <h1>{{ msg }}</h1>
     <input type="text" v-model="search">
-    <p v-for="item in paginate(contents)" :key="item.id">{{ item.title }}</p>
+    <p v-for="item in contents" :key="item.id">{{ item.title }}</p>
     <button @click="prevPage" :disabled="pageNumber === 0">prev</button>
     <button @click="nextPage" :disabled="pageNumber >= pageCount -1">next</button>
   </div>
@@ -13,7 +17,8 @@
 <script>
 import { EventBus } from '@/services/EventBus'
 import http from '@/services/httpQuery'
-import paginate from '@/mixins/paginate'
+import GlobalMethods from '@/mixins/GlobalMethods'
+import GoogleMapDrawer from '@/mixins/GoogleMapDrawer'
 
 export default {
   name: 'HelloWorld',
@@ -21,11 +26,12 @@ export default {
     return {
       search: '',
       msg: 'Welcome to Your Vue.js App',
-      contents: []
+      contents: [],
     }
   },
   mixins: [
-    paginate,
+    GlobalMethods,
+    GoogleMapDrawer
   ],
   computed: {
     entity() {
@@ -33,16 +39,6 @@ export default {
       array = this.search.length > 0 ? array.filter(a => a.title.includes(this.search.toLowerCase())) : array
       return array
     },
-    paginatedData(){
-      const start = this.pageNumber * this.perPage,
-        end = start + this.perPage;
-      return this.contents.slice(start, end);
-    },
-    pageCount(){
-      let l = this.contents.length,
-        s = this.perPage;
-      return Math.floor(l/s);
-    }
   },
   created() {
     http.get('posts').then(data => {
@@ -52,16 +48,14 @@ export default {
     EventBus.$emit('DataChanged', 222)
   },
   methods: {
-    nextPage(){
-      this.pageNumber++;
-    },
-    prevPage(){
-      this.pageNumber--;
-    }
+
   }
 }
 </script>
 
 <style scoped>
-
+#map{
+  width: 100%;
+  height: 500px;
+}
 </style>

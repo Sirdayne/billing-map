@@ -10,6 +10,7 @@
     "build": "node build/build.js"
   },
   "dependencies": {
+    "@google/maps": "^0.4.6",
     "axios": "^0.18.0",
     "moment": "^2.22.2",
     "vue": "^2.5.2",

@@ -3,7 +3,7 @@
     <router-link to="/">Home</router-link>
     <img src="@/assets/logo.png">
     <h1>{{ msg }}</h1>
-    <h2>{{ newEntity }}</h2>
+    <h2>{{ data }}</h2>
   </div>
 </template>
 
@@ -16,7 +16,7 @@ export default {
   data () {
     return {
       msg: 'Billing Map',
-      newEntity: 1
+      data: 1
     }
   },
   computed: {
@@ -25,10 +25,8 @@ export default {
     },
   },
   created() {
-    console.log(this.newEntity, 'created')
-    EventBus.$on('EntityChanged', (entity) => {
-      this.newEntity = entity
-      console.log(this.newEntity, 'changed')
+    EventBus.$on('DataChanged', entity => {
+      this.data = entity
     })
   },
 }

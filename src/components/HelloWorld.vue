@@ -3,6 +3,7 @@
     <router-link to="billing-map">Billing Map</router-link>
     <img src="@/assets/logo.png">
     <h1>{{ msg }}</h1>
+    <input type="text" v-model="search">
     <p v-for="item in entity">{{ item.title }}</p>
   </div>
 </template>
@@ -15,19 +16,22 @@ export default {
   name: 'HelloWorld',
   data () {
     return {
+      search: '',
       msg: 'Welcome to Your Vue.js App'
     }
   },
   computed: {
     entity() {
-      return this.$store.getters.getEntity
+      let array = this.$store.getters.getEntity
+      array = this.search.length > 0 ? array.filter(a => a.title.includes(this.search.toLowerCase())) : array
+      return array
     },
   },
   created() {
     http.get('posts').then(data => {
       this.$store.dispatch('actionSetEntity', data)
-      EventBus.$emit('EntityChanged', 222)
     })
+    EventBus.$emit('DataChanged', 222)
   },
 }
 </script>
